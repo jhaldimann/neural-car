@@ -3,6 +3,8 @@ import tkinter as tk
 WIDTH = 500
 HEIGHT = 500
 window = tk.Tk()
+canvas = tk.Canvas(window, width=WIDTH, height=HEIGHT)
+canvas.pack(expand=1, fill=tk.BOTH)
 
 
 def setup():
@@ -18,8 +20,8 @@ def setup():
 
     window.geometry("+{}+{}".format(pos_right, pos_down))
     window.resizable(0, 0)
-    window.mainloop()
 
 
 if __name__ == '__main__':
     setup()
+    window.mainloop()
