@@ -2,7 +2,7 @@ class Polyline:
 
     def __init__(self, lines):
         self.lines = lines
-        self.color = "#fff"
+        self.color = "#000"
 
     def set_color(self, color):
         self.color = color

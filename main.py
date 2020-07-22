@@ -3,7 +3,10 @@ import time
 
 from lib.car import Car
 from lib.point import Point
+from lib.line import Line
 from lib.vector import Vector
+from lib.polyline import Polyline
+from lib.ray import Ray
 
 WIDTH = 500
 HEIGHT = 500
@@ -14,6 +17,7 @@ canvas.pack(expand=1, fill=tk.BOTH)
 
 def setup():
     global window
+
     window.title('The game')
     window.geometry(f"{WIDTH}x{HEIGHT}")
 
@@ -31,3 +35,16 @@ def setup():
 
 if __name__ == '__main__':
     setup()
+    polyline1 = Polyline([Line(Point(0, 0), Point(500, 500))])
+    polyline1.draw(canvas)
+    polyline2 = Polyline([Line(Point(250, 0), Point(250, 500))])
+    polyline2.draw(canvas)
+    point = Point(100, 250)
+    point.draw(canvas)
+    ray = Ray(point, Vector(1, .5))
+    if ray.cast([polyline1, polyline2]):
+        print(f"Hit at P({ray.hit.x}, {ray.hit.y})")
+    else:
+        print("No Hit!")
+    ray.draw(canvas)
+    window.mainloop()
