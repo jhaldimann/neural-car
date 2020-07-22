@@ -39,12 +39,8 @@ if __name__ == '__main__':
     polyline1.draw(canvas)
     polyline2 = Polyline([Line(Point(250, 0), Point(250, 500))])
     polyline2.draw(canvas)
-    point = Point(100, 250)
-    point.draw(canvas)
-    ray = Ray(point, Vector(1, .5))
-    if ray.cast([polyline1, polyline2]):
-        print(f"Hit at P({ray.hit.x}, {ray.hit.y})")
-    else:
-        print("No Hit!")
-    ray.draw(canvas)
+    car = Car(Point(100, 250))
+    car.set_num_rays(30)
+    car.cast_rays([polyline1, polyline2])
+    car.draw(canvas)
     window.mainloop()

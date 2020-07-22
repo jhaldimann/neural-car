@@ -37,6 +37,7 @@ class Ray:
 
                     if self.hit is None:
                         self.hit = point
+                        min_dist = self.start.dist(point)
                     else:
                         dist = self.start.dist(point)
                         if dist < min_dist:
