@@ -13,3 +13,5 @@ class Point:
 
     def draw(self, canvas):
         canvas.create_oval(self.x-self.r, self.y-self.r, self.x + self.r, self.y + self.r, fill=self.color)
+        canvas.update_idletasks()
+        canvas.update()

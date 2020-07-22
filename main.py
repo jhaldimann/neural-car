@@ -1,4 +1,9 @@
 import tkinter as tk
+import time
+
+from lib.car import Car
+from lib.point import Point
+from lib.vector import Vector
 
 WIDTH = 500
 HEIGHT = 500
@@ -20,8 +25,9 @@ def setup():
 
     window.geometry("+{}+{}".format(pos_right, pos_down))
     window.resizable(0, 0)
+    window.update_idletasks()
+    window.update()
 
 
 if __name__ == '__main__':
     setup()
-    window.mainloop()

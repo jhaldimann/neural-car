@@ -9,6 +9,8 @@ class Line:
 
     def draw(self, canvas):
         canvas.create_line(self.start.x, self.start.y, self.end.x, self.end.y, fill=self.color)
+        canvas.update_idletasks()
+        canvas.update()
 
 
 
