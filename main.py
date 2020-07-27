@@ -1,12 +1,13 @@
 import tkinter as tk
 import time
+import random as rd
+import json
 
 from lib.car import Car
-from lib.point import Point
 from lib.line import Line
 from lib.vector import Vector
 from lib.polyline import Polyline
-from lib.ray import Ray
+from lib.map import Map
 
 WIDTH = 500
 HEIGHT = 500
@@ -33,14 +34,37 @@ def setup():
     window.update()
 
 
+def read_map(path):
+    polylines = []
+    with open(path) as json_file:
+        json_data = json.load(json_file)
+        for line in json_data['polylines'].split('\n'):
+            if line == '':
+                break
+            pl = Polyline([])
+            coords_str = line.split(sep=':')
+            coords_n = []
+            for c in coords_str:
+                xy = c.split(sep=',')
+                coords_n.append([int(xy[0]), int(xy[1])])
+
+            for i in range(len(coords_n)-1):
+                pl.add_line(Line(Vector(coords_n[i][0], coords_n[i][1]), Vector(coords_n[i+1][0], coords_n[i+1][1])))
+            polylines.append(pl)
+
+    return Map(Car(Vector(json_data['start'][0], json_data['start'][1])), polylines)
+
+
 if __name__ == '__main__':
     setup()
-    polyline1 = Polyline([Line(Point(0, 0), Point(500, 500))])
-    polyline1.draw(canvas)
-    polyline2 = Polyline([Line(Point(250, 0), Point(250, 500))])
-    polyline2.draw(canvas)
-    car = Car(Point(100, 250))
-    car.set_num_rays(30)
-    car.cast_rays([polyline1, polyline2])
-    car.draw(canvas)
-    window.mainloop()
+    map = read_map('maps/map_name.json')
+    map.car.set_num_rays(50)
+    map.car.cast_rays(map.polylines)
+    map.draw(canvas)
+
+    while True:
+        canvas.delete('all')
+        map.car.move(Vector(rd.random() - rd.random(), rd.random() - rd.random()))
+        map.car.cast_rays(map.polylines)
+        map.draw(canvas)
+        time.sleep(.5)

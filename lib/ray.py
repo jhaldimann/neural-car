@@ -1,13 +1,15 @@
 import math
 
-from lib.point import Point
 from lib.line import Line
+from lib.vector import Vector
+
 
 class Ray:
     def __init__(self, start, direction):
         self.start = start
         self.direction = direction.normalized()
         self.hit = None
+        self.color = "#00FF00"
 
     def cast(self, polylines):
         min_dist = float('inf')
@@ -22,16 +24,19 @@ class Ray:
 
                 x3 = self.start.x
                 y3 = self.start.y
-                x4 = self.direction.a * 1000
-                y4 = self.direction.b * 1000
+                x4 = self.direction.x * 1000
+                y4 = self.direction.y * 1000
 
                 den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+
+                if den == 0:
+                    continue
 
                 t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / den
                 u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den
 
                 if 0 < t < 1 and u > 0:
-                    point = Point(0, 0)
+                    point = Vector(0, 0)
                     point.x = x1 + t * (x2 - x1)
                     point.y = y1 + t * (y2 - y1)
 
@@ -47,9 +52,9 @@ class Ray:
         return self.hit
 
     def draw(self, canvas):
-        end = Point(self.direction.a * 1000, self.direction.b * 1000)
+        end = Vector(self.direction.x * 1000, self.direction.y * 1000)
         if self.hit is not None:
-            end = Point(self.hit.x, self.hit.y)
+            end = Vector(self.hit.x, self.hit.y)
         line = Line(self.start, end)
-        line.set_color("#00FF00")
+        line.set_color(self.color)
         line.draw(canvas)

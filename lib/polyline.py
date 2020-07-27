@@ -7,6 +7,9 @@ class Polyline:
     def set_color(self, color):
         self.color = color
 
+    def add_line(self, line):
+        self.lines.append(line)
+
     def draw(self, canvas):
         for line in self.lines:
             canvas.create_line(line.start.x, line.start.y, line.end.x, line.end.y, fill=self.color)
